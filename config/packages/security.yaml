@@ -36,7 +36,7 @@ security:
     access_control:
         - { path: ^/$, roles: PUBLIC_ACCESS }                      # page d'accueil publique
         - { path: ^/security/login$, roles: PUBLIC_ACCESS }        # page de login publique (par définition)
-        - { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
+        #- { path: ^/, roles: IS_AUTHENTICATED_REMEMBERED }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
