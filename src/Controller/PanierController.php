@@ -2,18 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
+use App\Entity\Produit;
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/panier', name: 'panier')]
 class PanierController extends AbstractController
 {
-    #[Route('/panier', name: 'app_panier')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PanierController.php',
-        ]);
-    }
+
 }
