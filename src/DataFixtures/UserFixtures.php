@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Panier;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
@@ -17,7 +18,7 @@ class UserFixtures extends Fixture
         $this->passwordEncoder = $passwordHasher;
     }
 
-    public function load(ObjectManager $manager): void
+    public function load(ObjectManager $em): void
     {
         $user1 = new User();
         $user1 ->setLogin("sadmin")
@@ -28,42 +29,53 @@ class UserFixtures extends Fixture
         $hashedPassword = $this->passwordEncoder->hashPassword($user1, 'nimdas');
         $user1->setPassword($hashedPassword);
 
-        $manager->persist($user1);
+        $em->persist($user1);
 
+        $panier0 = new Panier();
+        $em->persist($panier0);
 
         $user2 = new User();
         $user2 ->setLogin("gilles")
             ->setNom("Subrenat")
             ->setBirthday(new \DateTimeImmutable("05-06-1958"))
             ->setRoles(["ROLE_ADMIN"])
-            ->setPrenom("Gilles");
+            ->setPrenom("Gilles")
+            ->setPanier($panier0);
         $hashedPassword2 = $this->passwordEncoder->hashPassword($user2,'sellig');
         $user2->setPassword($hashedPassword2);
 
-        $manager->persist($user2);
+        $em->persist($user2);
+
+        $panier1 = new Panier();
+        $em->persist($panier1);
 
         $user3 = new User();
         $user3 ->setLogin("rita")
             ->setNom("Zrour")
             ->setBirthday(new \DateTimeImmutable("07-11-1962"))
             ->setRoles(["ROLE_CLIENT"])
-            ->setPrenom("Rita");
+            ->setPrenom("Rita")
+            ->setPanier($panier1);
         $hashedPassword3 = $this->passwordEncoder->hashPassword($user3,'atir');
         $user3->setPassword($hashedPassword3);
 
-        $manager->persist($user3);
+        $em->persist($user3);
+
+        $panier2 = new Panier();
+        $em->persist($panier2);
 
         $user4 = new User();
         $user4 ->setLogin("simon")
             ->setNom("Rame")
             ->setBirthday(new \DateTimeImmutable("23-12-1982"))
             ->setRoles(["ROLE_CLIENT"])
-            ->setPrenom("Simon");
+            ->setPrenom("Simon")
+            ->setPanier($panier2);
         $hashedPassword4 = $this->passwordEncoder->hashPassword($user4,'nomis');
         $user4->setPassword($hashedPassword4);
 
-        $manager->persist($user4);
+        $em->persist($user4);
 
-        $manager->flush();
+        $em->flush();
     }
 }

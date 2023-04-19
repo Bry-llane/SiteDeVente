@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -17,7 +18,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+
+    #[ORM\Column(length: 180, unique: true),
+        Assert\NotBlank(message: 'Votre login ne doit pas être vide !')]
     private ?string $login = null;
 
     #[ORM\Column]
@@ -29,10 +32,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50),
+        Assert\NotBlank(message: 'Votre nom ne doit pas être vide !')]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100),
+Assert\NotBlank(message: 'Votre prenom ne doit pas être vide !')]
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -41,6 +46,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Panier $panier = null;
 
+
+    public function __construct(string $roles = 'ROLE_CLIENT')
+    {
+        $this->panier = null;
+        $this->roles = [$roles];
+    }
     public function getId(): ?int
     {
         return $this->id;

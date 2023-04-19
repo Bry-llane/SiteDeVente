@@ -14,5 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/panier', name: 'panier')]
 class PanierController extends AbstractController
 {
-
+    #[Route('/list', name: '_list')]
+    public function listAction(EntityManagerInterface $em): Response
+    {
+        return $this->render('listPanier.html.twig');
+    }
 }

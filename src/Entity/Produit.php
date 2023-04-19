@@ -14,13 +14,16 @@ class Produit
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255),
+        Assert\NotBlank(message: 'Le nom du produit ne doit pas être vide')]
     private ?string $libelle = null;
 
-    #[ORM\Column]
+    #[ORM\Column,
+        Assert\Positive(message: "Le prix doit être positif")]
     private ?float $prix = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true),
+        Assert\PositiveOrZero(message: 'La quantité en stock doit être positive ou nul')]
     private ?int $quantite = null;
 
     #[ORM\ManyToOne(inversedBy: 'produit')]
