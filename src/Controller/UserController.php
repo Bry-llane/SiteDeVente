@@ -18,6 +18,7 @@ class UserController extends AbstractController
     #[Route('/createuser', name: '_createUser')]
     public function newUser(EntityManagerInterface $em,Request $request):Response
     {
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->add('Envoyer',SubmitType::class,['label' => 'creer compte']);
@@ -26,16 +27,19 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $panier0 = new Panier();
             $em->persist($panier0);
+
             $user->setPanier($panier0);
-            $em->persist($panier0);
+
+            $em->persist($user);
             $em->flush();
+            
             $this->addFlash('info','creation reussi');
             return $this->redirectToRoute('accueil');
 
         }
-        if($form->isSubmitted())
-            $this->addFlash('info','formulaire de creation incorect');
-
+        if($form->isSubmitted()) {
+            $this->addFlash('info', 'formulaire de creation incorect');
+        }
         $args = array(
             'myform' => $form->createView(),
         );
