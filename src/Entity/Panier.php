@@ -19,9 +19,12 @@ class Panier
     #[ORM\OneToMany(mappedBy: 'panier', targetEntity: Produit::class)]
     #[ORM\JoinColumn(nullable:true)]
     private Collection $produit;
-
+    
     #[ORM\OneToOne(mappedBy: 'panier', cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\Column]
+    private ?int $quantitePanier = null;
 
     public function __construct()
     {
@@ -81,6 +84,18 @@ class Panier
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getQuantitePanier(): ?int
+    {
+        return $this->quantitePanier;
+    }
+
+    public function setQuantitePanier(int $quantitePanier): self
+    {
+        $this->quantitePanier = $quantitePanier;
 
         return $this;
     }
