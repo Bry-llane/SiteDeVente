@@ -17,5 +17,27 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/user', name: 'user')]
 class UserController extends AbstractController
 {
+    #[Route('/createuser', name: '_createUser')]
+    public function newUser(EntityManagerInterface $em,Request $request):Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->add('Envoyer',SubmitType::class,['label' => 'creer compte']);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->flush();
+            $this->addFlash('info','creation reussi');
+            return $this->redirectToRoute('acceuil');
+
+        }
+        if($form->isSubmitted())
+            $this->addFlash('info','formulaire de creation incorect');
+
+
+        return $this->render('User/new.html.twig', ['form' => $form->createView(),
+        ]);
+
+    }
 }
