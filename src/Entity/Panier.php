@@ -17,6 +17,7 @@ class Panier
     private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'panier', targetEntity: Produit::class)]
+    #[ORM\JoinColumn(nullable:true)]
     private Collection $produit;
 
     #[ORM\OneToOne(mappedBy: 'panier', cascade: ['persist', 'remove'])]

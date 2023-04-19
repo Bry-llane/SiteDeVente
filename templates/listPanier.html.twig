@@ -19,15 +19,10 @@
                         <td><button><a href="{{ path("accueil") }}">Supprimer</a></button></td>
                     </tr>
                 {% endfor %}
-
-                <tr>
-                    <tr>
-                        <td colspan="3"></td>
-                        <td><button><a href="{{ path("accueil") }}">Commander</a></button></td>
-                        <td><button><a href="{{ path("accueil") }}">Vider</a></button></td>
-                    </tr>
-                </tr>
             </table>
+
+            <td><button><a href="{{ path("accueil") }}">Commander</a></button></td>
+            <td><button><a href="{{ path("accueil") }}">Vider</a></button></td>
         </form>
     </div>
 {% endblock %}
