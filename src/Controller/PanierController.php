@@ -42,5 +42,5 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('panier_index');
     }
 
-   
+
 }

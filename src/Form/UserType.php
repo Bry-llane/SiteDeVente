@@ -21,7 +21,7 @@ class UserType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('birthday')
-            ->add('panier')
+            //->add('panier')
         ;
     }
 

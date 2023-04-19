@@ -2,16 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
 use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/user', name: 'user')]
@@ -26,18 +24,24 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $panier0 = new Panier();
+            $em->persist($panier0);
+            $user->setPanier($panier0);
+            $em->persist($panier0);
             $em->flush();
             $this->addFlash('info','creation reussi');
-            return $this->redirectToRoute('acceuil');
+            return $this->redirectToRoute('accueil');
 
         }
         if($form->isSubmitted())
             $this->addFlash('info','formulaire de creation incorect');
 
+        $args = array(
+            'myform' => $form->createView(),
+        );
 
-        return $this->render('User/new.html.twig', ['form' => $form->createView(),
-        ]);
+
+        return $this->render('User/new.html.twig', $args);
 
     }
 }
