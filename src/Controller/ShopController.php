@@ -35,9 +35,8 @@ class ShopController extends AbstractController
     public function addAction(EntityManagerInterface $em, Request $request): Response
     {
         $produit = new Produit();
-
-        $form = $this->createForm(ProductType::class, $produit);
-        $form->add('send', SubmitType::class, ['label' => 'Ajouter un produit']);
+        $form = $this->createForm(ProduitType::class, $produit);
+        $form->add('Envoyer', SubmitType::class, ['label' => 'Ajouter un produit']);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {

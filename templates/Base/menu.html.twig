@@ -10,7 +10,7 @@
                 <li><a href="{{ path("panier_list") }}"> Mon panier </a></li>
                 {% if app.user.roles[0] == 'ROLE_ADMIN' %}
                     <li><a href="{{ path("accueil") }}"> Gérer les clients </a></li>
-                    <li><a href="{{ path("accueil") }}"> Ajouter un produit </a></li>
+                    <li><a href="{{ path("shop_add") }}"> Ajouter un produit </a></li>
                     <li><a href="https://fr.wikipedia.org/wiki/The_Truman_Show"> The Truman Show </a></li>
                 {% endif %}
             {% elseif app.user.roles[0] == 'ROLE_SUPER_ADMIN' %}
