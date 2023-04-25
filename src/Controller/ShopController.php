@@ -16,5 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/shop', name: 'shop')]
 class ShopController extends AbstractController
 {
+    #[Route('/add_shop', name: '_addshop')]
+    public function addShop(EntityManagerInterface $em,Request $request): Response
+    {
 
+    }
 }
