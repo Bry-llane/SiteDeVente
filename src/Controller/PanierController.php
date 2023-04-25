@@ -42,5 +42,12 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('panier_list');
     }
 
+    #[Route('/add/{id}',name: '_add')]
+    public function addAction(Produit $id, EntityManagerInterface $em): Response
+    {
+        $panierRepository = $em->getRepository();
 
+
+        
+    }
 }

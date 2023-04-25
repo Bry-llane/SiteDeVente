@@ -16,6 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/shop', name: 'shop')]
 class ShopController extends AbstractController
 {
+<<<<<<< HEAD
+    #[Route('/add_shop', name: '_addshop')]
+    public function addShop(EntityManagerInterface $em,Request $request): Response
+    {
+
+=======
     #[Route('/list', name: '_list')]
     public function listAction(ManagerRegistry $doctrine): Response
     {
@@ -48,5 +54,6 @@ class ShopController extends AbstractController
 
         $args = array('myform' => $form->createView());
         return $this->render('Shop/add.html.twig', $args);
+>>>>>>> 24df82762959a56f0d1ddad539a6a6b3f9c4aedb
     }
 }
