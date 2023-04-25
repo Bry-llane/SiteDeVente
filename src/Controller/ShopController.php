@@ -16,5 +16,38 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/shop', name: 'shop')]
 class ShopController extends AbstractController
 {
+    #[Route('/list', name: '_list')]
+    public function listAction(ManagerRegistry $doctrine): Response
+    {
+        $em = $doctrine->getManager();
+        $produitsRepository = $em->getRepository(Produit::class);
+        $produits = $produitsRepository->findAll();
 
+        $args = array(
+            'produits' => $produits
+        );
+
+
+        return $this->render('shop/list.html.twig', $args);
+    }
+
+    #[Route('/add', name: '_add')]
+    public function addAction(EntityManagerInterface $em, Request $request): Response
+    {
+        $produit = new Produit();
+
+        $form = $this->createForm(ProductType::class, $produit);
+        $form->add('send', SubmitType::class, ['label' => 'Ajouter un produit']);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $em->persist($produit);
+            $em->flush();
+            $this->addFlash('info', 'Produit créé !');
+            return $this->redirectToRoute("accueil");
+        }
+
+        $args = array('myform' => $form->createView());
+        return $this->render('Shop/add.html.twig', $args);
+    }
 }
