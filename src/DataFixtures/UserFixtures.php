@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Panier;
+use App\Entity\Produit;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
@@ -20,6 +21,8 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $em): void
     {
+
+
         $user1 = new User();
         $user1 ->setLogin("sadmin")
             ->setNom("Jean")
@@ -75,6 +78,14 @@ class UserFixtures extends Fixture
         $user4->setPassword($hashedPassword4);
 
         $em->persist($user4);
+
+        $produit = new Produit();
+        $produit
+            ->setLibelle("orange")
+            ->setQuantite(100)
+            ->setPrix(55)
+            ->setPanier($panier1);
+        $em->persist($produit);
 
         $em->flush();
     }
