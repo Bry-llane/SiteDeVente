@@ -6,7 +6,6 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +41,7 @@ class ShopController extends AbstractController
             $em->persist($produit);
             $em->flush();
             $this->addFlash('info', 'Produit créé !');
-            return $this->redirectToRoute("accueil");
+            return $this->redirectToRoute("shop_list");
         }
 
         $args = array('myform' => $form->createView());
