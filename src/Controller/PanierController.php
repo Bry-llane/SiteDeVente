@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Panier;
 use App\Entity\Produit;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,25 +22,24 @@ class PanierController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: '_delete')]
-    public function deleteAction(Product $id, EntityManagerInterface $em): Response
+    public function deleteAction(Produit $id, EntityManagerInterface $em): Response
     {
-        $panierRepository = $em->getRepository();
-
-        $panierRepo = $em->getRepository('App:Panier');
-        $panier = $panierRepo->findOneBy(['user' => $user, 'product' => $id_product]);
+        $user = $this->getUser();
+        $panierRepository = $em->getRepository(Panier::class);
+        $panier = $panierRepository->findOneBy(['user' => $user, 'product' => $id]);
 
         //Quantity dans le panier
-        $panierQuantity = $panier->getQuantity();
+        $panierQuantite = $panier->getQuantitePanier();
 
         // Quantity de base
-        $produitQuantity = $id_product->getEnStock();
+        $produitQuantite = $id->getQuantite();
 
-        $id_product->setEnStock($produitQuantity + $panierQuantity);
+        $id->setQuantite($produitQuantite + $panierQuantite);
 
         $em->remove($panier);
-        $em->persist($id_product);
+        $em->persist($id);
         $em->flush();
-        return $this->redirectToRoute('panier_index');
+        return $this->redirectToRoute('panier_list');
     }
 
     #[Route('/add/{id}',name: '_add')]
